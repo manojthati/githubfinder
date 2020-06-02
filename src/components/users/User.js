@@ -25,7 +25,7 @@ const User = ({ user, loading, getUser, getUserRepos, repos, match}) => {
             public_repos,
             public_gists,
             hireable            
-        }= user;        
+        } = user;        
         
         if (loading) return <Spinner />;
 
