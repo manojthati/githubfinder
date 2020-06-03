@@ -13,8 +13,6 @@ import GithubState from './context/github/GithubState';
 import './App.css';
 
 const App = () => {
-  const [users, setUsers] = useState([]);
-  const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
@@ -26,17 +24,6 @@ const App = () => {
   //   console.log(process.env.REACT_APP_GITHUB_SECRET);
   //   this.setState({ users:res.data, loading: false});
   // }
-
-
-  //Get SIngle GitHub User
-  const getUser = async username =>{
-    setLoading (true);
-
-    const res = await axios.get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_ID}&client_secret=${process.env.REACT_APP_GITHUB_SECRET}`);
-        
-    setUser(res.data);
-    setLoading(false);  
-  };
 //Get GitHub User Repo 
   const getUserRepos = async username =>{
     setLoading(true);
@@ -44,13 +31,8 @@ const App = () => {
           
     setRepos(res.data);
     setLoading(false);        
-  };
-  
-  //clear Users form state 
-  const clearUsers = () => {
-    setUsers([]);
-    setLoading(false);
-  }
+  };  
+
 
   //alerting when searching with null
   const showAlert = (msg, type) => {
@@ -68,14 +50,14 @@ const App = () => {
               <Switch>
                 <Route exact path='/' render={props =>(
                   <Fragment>
-                    <Search clearUsers={clearUsers} showClear={users.length > 0 ? true:false} setAlert={showAlert}/>
-                    <Users loading={loading} users={users} />
+                    <Search setAlert={showAlert}/>
+                    <Users />
                   </Fragment>
                )} 
                 />
                 <Route exact path='/about' component={About} />
                 <Route exact path='/user/:username' render={props =>(
-                  <User{ ...props} getUser={getUser} getUserRepos={getUserRepos} user={user} loading={loading} repos={repos} />
+                  <User{ ...props} getUserRepos={getUserRepos} repos={repos} />
                 )} />
               </Switch>          
             </div>
