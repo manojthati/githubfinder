@@ -24,3 +24,5 @@ yarn-error.log*
 
 *.zip
 *.exe
+# Local Netlify folder
+.netlify
